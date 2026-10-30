@@ -29,6 +29,8 @@ build/
 dist/
 node_modules/
 release/
+# docs/release/ holds the test package's read-me, not build output
+!docs/release/
 stage_backups/
 # WebView2 offline installer: downloaded by build_alpha.ps1 or placed by the packer, never committed (S-5)
 redist/

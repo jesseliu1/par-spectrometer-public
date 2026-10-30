@@ -16,7 +16,6 @@ tests/acquisition/test_settings_reconnect_backlog.py
 tests/acquisition/test_uncaught_errors.py
 tests/api/test_acquisition_export_parity.py
 tests/api/test_dli_parity.py
-tests/api/test_dli_poll_cycle.py
 tests/api/test_golden_dli_api.py
 tests/api/test_history_parity.py
 tests/api/test_operations_parity.py
