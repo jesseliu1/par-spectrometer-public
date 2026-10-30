@@ -1,0 +1,206 @@
+# Tool configuration only (the app is not packaged as a Python distribution).
+# Rules referenced as R-x-y live in internal notes
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+extend-exclude = ["old", ".venv", ".tools", "docs/algorithms", "internal notes"]
+
+[tool.ruff.lint]
+# R-1-3: E701/E702 forbid squeezing statements onto one line; ANN requires type annotations on new code
+# (legacy gaps are baselined by tools/quality/ratchet.py). ANN401 (Any) stays on: justify each with noqa.
+select = ["E", "F", "W", "B", "UP", "I", "ANN"]
+
+[tool.ruff.format]
+quote-style = "preserve"
+
+# R-1-3: strict typing for new domain/storage/services packages; legacy modules are not type-checked yet.
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    "par_app.domain.*", "par_app.storage.*", "par_app.services", "par_app.services.*",
+    "par_app.application", "par_app.application.*", "par_app.api", "par_app.api.*", "par_shell", "par_shell.*",
+    "par_app.acquisition_host", "par_app.acquisition_host.*", "par_app.service_main",
+    "par_app.alpha_info", "par_app.alpha_self_test_db", "par_app.alpha_self_test_bus", "main_v2",
+]
+strict = true
+
+# Legacy modules imported by the typed packages: their annotations are used, their own errors are not reported
+# (they were never type-checked; they join strict typing when they are migrated, not as a side effect of an import).
+[[tool.mypy.overrides]]
+module = [
+    "par_app.math_ops", "par_app.mccree1972_weights", "par_app.models", "par_app.protocol", "par_app.database",
+    "par_app.coordinator", "par_app.device_hub", "par_app.app_config", "par_app.maintenance", "par_app.runtime_paths",
+    "par_app.photopic_weights",
+]
+follow_imports = "silent"
+
+# R-1-1: import contracts describing today's layering. Add contracts for new packages
+# (par_app.domain, par_app.storage, par_app.ui.pages ...) in the PR that creates them.
+[tool.importlinter]
+root_package = "par_app"
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Domain modules stay free of Qt, I/O and UI"
+type = "forbidden"
+source_modules = [
+    "par_app.math_ops", "par_app.mccree1972_weights", "par_app.photopic_weights", "par_app.models", "par_app.rtu_frames",
+    "par_app.alpha_info",
+]
+forbidden_modules = [
+    "PyQt5", "PyQt6", "PySide2", "PySide6", "shiboken6", "matplotlib", "pymodbus", "serial", "sqlite3",
+    "par_app.database", "par_app.protocol", "par_app.coordinator", "par_app.device_hub",
+]
+
+[[tool.importlinter.contracts]]
+name = "Protocol, storage and acquisition never import UI"
+type = "forbidden"
+source_modules = [
+    "par_app.protocol", "par_app.database", "par_app.maintenance", "par_app.coordinator", "par_app.app_config",
+    "par_app.alpha_self_test_db", "par_app.alpha_self_test_bus",
+]
+forbidden_modules = [
+    "matplotlib",
+]
+[[tool.importlinter.contracts]]
+name = "par_app.domain stays free of Qt, I/O and UI"
+type = "forbidden"
+source_modules = ["par_app.domain"]
+forbidden_modules = [
+    "PyQt5", "PyQt6", "PySide2", "PySide6", "shiboken6", "matplotlib", "pymodbus", "serial", "sqlite3",
+    "par_app.database", "par_app.protocol", "par_app.coordinator", "par_app.device_hub",
+    "par_app.maintenance", "par_app.app_config", "par_app.runtime_paths",
+]
+
+# New packages (par_app/domain, par_app/storage, par_app/ui/...) must be added to a contract's
+# source_modules in the PR that creates them; tests/unit/test_architecture.py enforces this.
+
+[[tool.importlinter.contracts]]
+name = "Services stay free of Qt, plotting, SQL and UI"
+type = "forbidden"
+source_modules = ["par_app.services"]
+forbidden_modules = [
+    "PyQt5", "PyQt6", "PySide2", "PySide6", "shiboken6", "matplotlib", "sqlite3",
+    ]
+
+[[tool.importlinter.contracts]]
+name = "Protocol does not depend on storage or scheduling"
+type = "forbidden"
+source_modules = ["par_app.protocol"]
+forbidden_modules = ["par_app.database", "par_app.coordinator", "par_app.device_hub", "par_app.maintenance"]
+
+# Stage two (route C, internal notes section 4): api -> application -> services/domain.
+[[tool.importlinter.contracts]]
+name = "Application layer stays free of Qt, UI, web frameworks and device access"
+type = "forbidden"
+source_modules = ["par_app.application"]
+forbidden_modules = [
+    "PyQt5", "PyQt6", "PySide2", "PySide6", "shiboken6", "matplotlib", "pymodbus", "serial",
+    "par_app.protocol", "par_app.coordinator", "par_app.device_hub", "par_app.maintenance", "par_app.app_config",
+    "par_app.api", "fastapi", "starlette", "uvicorn", "pydantic",
+]
+
+[[tool.importlinter.contracts]]
+name = "API layer stays free of Qt, UI and device access"
+type = "forbidden"
+source_modules = ["par_app.api"]
+forbidden_modules = [
+    "PyQt5", "PyQt6", "PySide2", "PySide6", "shiboken6", "matplotlib", "pymodbus", "serial",
+    "par_app.protocol", "par_app.coordinator", "par_app.device_hub", "par_app.maintenance", "par_app.app_config",
+]
+
+[[tool.importlinter.contracts]]
+name = "API layer reaches storage only through the application layer"
+type = "forbidden"
+source_modules = ["par_app.api"]
+forbidden_modules = [
+    "sqlite3", "par_app.database", "par_app.models", "par_app.math_ops", "par_app.runtime_paths",
+    "par_app.mccree1972_weights", "par_app.photopic_weights", "par_app.rtu_frames",
+]
+allow_indirect_imports = true
+
+# Route C section 4: the API calls only the application layer. Services (texts, display rules, calculations) are
+# reached through par_app.application, which hands the API finished values to map into response models.
+[[tool.importlinter.contracts]]
+name = "API layer reaches services only through the application layer"
+type = "forbidden"
+source_modules = ["par_app.api"]
+forbidden_modules = ["par_app.services"]
+allow_indirect_imports = true
+
+[[tool.importlinter.contracts]]
+name = "Lower layers never import the application or API layers"
+type = "forbidden"
+source_modules = [
+    "par_app.domain", "par_app.services", "par_app.database", "par_app.models", "par_app.math_ops",
+    "par_app.protocol", "par_app.coordinator", "par_app.device_hub", "par_app.maintenance", "par_app.app_config",
+    ]
+forbidden_modules = ["par_app.application", "par_app.api", "fastapi", "starlette", "uvicorn"]
+
+# Qt binding choice (internal notes section 3): qt_binding is imported before any Qt and must
+# load none; qt_compat (the QtCore names of the shared acquisition code) reaches no UI, web or application layer.
+[[tool.importlinter.contracts]]
+name = "Qt binding selector loads no Qt and no application code"
+type = "forbidden"
+source_modules = ["par_app.qt_binding"]
+forbidden_modules = [
+    "PyQt5", "PyQt6", "PySide2", "PySide6", "shiboken6", "par_app.qt_compat", "par_app.coordinator",
+    "par_app.device_hub", "par_app.acquisition_host", "par_app.api", "par_app.application",
+]
+
+[[tool.importlinter.contracts]]
+name = "Qt compatibility layer stays below the acquisition code"
+type = "forbidden"
+source_modules = ["par_app.qt_compat"]
+forbidden_modules = [
+    "par_app.coordinator", "par_app.device_hub", "par_app.protocol", "par_app.maintenance", "par_app.database",
+    "par_app.acquisition_host", "par_app.service_main", "par_app.api", "par_app.application",
+    "matplotlib", "fastapi", "uvicorn",
+]
+
+# Tier-1 takeover (internal notes 1.6): Qt core and V1.0.3's acquisition code only;
+# no widgets, no old UI, no web layer. QtWidgets/QtGui are checked by tests/unit/test_architecture.py
+# (import-linter squashes external packages to "PyQt5").
+[[tool.importlinter.contracts]]
+name = "Acquisition host stays free of the old UI and the web layer"
+type = "forbidden"
+source_modules = ["par_app.acquisition_host"]
+forbidden_modules = [
+    "matplotlib", "par_app.api", "fastapi", "starlette", "uvicorn",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "unit: no Qt, no hardware, no network (R-3-1)",
+    "qt: offscreen Qt logic with bundled font and temporary config (R-3-1)",
+    "layout: pixel/geometry assertions; Windows runner is authoritative (R-3-1)",
+    "hardware: needs a real spectrometer; excluded from CI, explicit authorization required (R-3-1)",
+    "legacy: wraps an unmigrated verify_*.py script (R-3-4)",
+    "spec(id): business rule id(s) from docs/spec covered by this test (R-2-4)",
+    "exemption(reason, ref, owner, expires, raises, platforms, condition, strict): named, time-limited known failure (R-3-5); see tests/exemptions.py",
+    "rejection(id): covers one row (R1..R22) of the tier-2 rejection table, internal notes 10.4",
+    "known_defect(ref): asserts the status-quo value of a known defect or pending decision, NOT a correct value (R-3-2)",
+    "qt_binding(name): the Qt binding (PyQt5 or PySide6) the test runs on, if not its file's (tests/conftest.py; internal notes)",
+    "watchdog(seconds): this test's own watchdog bound instead of PAR_TEST_WATCHDOG_SECONDS, for a test whose fixtures run several bounded steps in a row (tests/conftest.py; the parity runs, #66)",
+]
+# tests/conftest.py sets PYTEST_QT_API to the session's binding; this is the fallback (V1.0.3's binding).
+qt_api = "pyside6"
+
+# R-3-6: diff coverage is measured on changed lines; legacy verify_*.py subprocesses are measured too.
+[tool.coverage.run]
+source = ["par_app", "par_shell", "tools"]
+branch = true
+patch = ["subprocess"]
+parallel = true
+sigterm = true
+
+[tool.coverage.report]
+show_missing = false
+skip_empty = true

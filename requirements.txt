@@ -1,0 +1,13 @@
+pymodbus>=3.10
+pyserial>=3.5
+numpy>=1.26
+matplotlib>=3.8
+openpyxl>=3.1
+fastapi>=0.115
+# Plain uvicorn (no [standard] extras): pure-Python h11 server, no compiled uvloop/httptools/watchfiles.
+uvicorn>=0.32
+# Desktop shell of the 2.0.0-alpha (par_shell/): WebView2 via pythonnet on Windows, WebKit via PyObjC on macOS.
+pywebview>=6.2
+# Qt binding of the 2.0.0-alpha service (internal notes; S-6, owner 2026-10-19): QtCore only, LGPL-3.0.
+# 6.11.x: Python 3.11 wheels (abi3) for Windows x64 and macOS 13+.
+PySide6-Essentials>=6.11,<6.12

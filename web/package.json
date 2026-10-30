@@ -1,0 +1,33 @@
+{
+  "name": "par-spectrometer-web",
+  "private": true,
+  "version": "2.0.0-alpha.9",
+  "description": "PAR 光谱仪 2.0.0-alpha 网页界面（阶段二路线 C）；构建产物由本机服务托管",
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.2"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "test": "vitest run",
+    "check:tokens": "node scripts/check-tokens.mjs",
+    "test:e2e": "playwright test",
+    "check": "npm run check:tokens && npm run test && npm run build"
+  },
+  "dependencies": {
+    "echarts": "6.1.0",
+    "vue": "3.5.44"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "22.20.5",
+    "@vitejs/plugin-vue": "6.0.10",
+    "@vue/test-utils": "2.5.1",
+    "happy-dom": "21.0.3",
+    "typescript": "5.9.3",
+    "vite": "8.3.4",
+    "vitest": "5.0.5",
+    "vue-tsc": "3.3.13"
+  }
+}

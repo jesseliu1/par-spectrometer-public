@@ -1,0 +1,139 @@
+/*
+ * Design tokens of the 2.0.0-alpha web UI — the only file in web/src that may contain colour values (R-1-5,
+ * checked by `npm run check:tokens`).
+ *
+ * Direction: A「实验室仪表」(S-9,负责人 2026-10-18; docs/design/ui-v2/方向对比.md). Values follow
+ * docs/design/ui-v2-pages.md 3.4 (direction A column, sourced from the V1.0.x par_app/theme.py), with the
+ * notes of the comparison document applied: the accent stays the V1.0.x #2563eb (方向对比 recommendation,
+ * not Stitch's #0284c7); KPI cards are compressed (22px telemetry size from stitch/A-design.md instead of
+ * the 28px pre-Stitch draft); numerals use a monospace stack with tabular figures: JetBrains Mono
+ * (stitch/A-design.md) ships with the app like Noto Sans SC (web/fonts, UI-001; PR #48 review question 1), and
+ * glyphs it lacks (CJK) fall to the bundled Noto Sans SC, so every PC renders the same; the system monospace
+ * fonts are only a last resort if the bundled file cannot load. Status semantics are fixed across
+ * directions (docs/design/ui-v2-pages.md 3): ok = body text (UI-262), warning = amber, error = red,
+ * disabled = grey; the green success badges of the Stitch mock are NOT adopted. Text/background pairs below
+ * meet WCAG AA (≥ 4.5:1; checked 2026-10-18 and locked by tests/directionA.test.ts: text on surface 16.3,
+ * on-surface-variant 7.6, primary 5.2 (4.8 on background), error 4.8 (4.5 on background), warning 5.0,
+ * success 5.0, on-primary-container 7.2, on-error-container 7.6, on-warning-container 6.4; status text on a
+ * selected record row uses --color-selected-*: success 5.8, error 5.3, warning 5.8 on primary-container, and the
+ * plain status colours on a hovered row stay ≥ 4.6);
+ * --color-disabled (2.6) is only used for inactive controls, which WCAG 1.4.3 exempts, and --color-outline
+ * (#cbd5e1, the V1.0.x control border) is a non-text border relying on the surface tiers and focus ring.
+ */
+:root {
+  color-scheme: light;
+
+  /* colour roles (V1.0.x par_app/theme.py family) */
+  --color-background: #f5f7fb;
+  --color-on-background: #172033;
+  --color-surface: #ffffff;
+  --color-surface-container-low: #f8fafc;
+  --color-surface-container: #f1f5f9;
+  --color-surface-container-high: #e2e8f0;
+  --color-on-surface: #172033;
+  --color-on-surface-variant: #475569;
+  --color-outline: #cbd5e1;
+  --color-outline-variant: #dbe3ef;
+  --color-primary: #2563eb;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #dbeafe;
+  --color-on-primary-container: #1e40af;
+  --color-error: #dc2626;
+  --color-on-error: #ffffff;
+  --color-error-container: #fef2f2;
+  --color-on-error-container: #991b1b;
+  --color-warning: #b45309;
+  --color-warning-container: #fef3c7;
+  --color-on-warning-container: #92400e;
+  --color-success: #15803d;
+  /* maintenance (ui-v2-pages.md 3.4 direction A color.maintenance #7C3AED; 17_ section 7): 5.7:1 on surface;
+     the container pair is the status-bar block "档位 2 · 通信维护中" (on-maintenance-container 8.0:1) */
+  --color-maintenance: #7c3aed;
+  --color-maintenance-container: #f5f3ff;
+  --color-on-maintenance-container: #5b21b6;
+  /* status text on a selected record-table row (--color-primary-container): the same hues one step darker, since
+     the plain ones fall below 4.5:1 there (success 4.1, error 4.0, warning 4.1; review of PR #48, M-1) */
+  --color-selected-success: #166534;
+  --color-selected-error: #b91c1c;
+  --color-selected-warning: #92400e;
+  --color-disabled: #94a3b8;
+  --color-scrim: rgba(23, 32, 51, 0.32);
+
+  /* charts (ECharts reads these through src/lib/theme.ts) */
+  --chart-axis: #475569;
+  --chart-grid: #e2e8f0;
+  --chart-spectrum: #2563eb;
+  --chart-spectrum-fill: rgba(37, 99, 235, 0.14);
+  --chart-par-band: rgba(22, 163, 74, 0.08);
+  --chart-par-label: #15803d;
+  --chart-line-width: 1.5;
+  /* spectrum charts: line width of the wavelength-coloured segments (V1.0.3 LineCollection 1.15, in matplotlib points; drawn through matplotlibWidth) and the four
+     reference curves (V1.0.3 _draw_response_overlays colours; the fill colours themselves are API-08 data) */
+  --chart-spectrum-segment-width: 1.15;
+  /* room right of the plot for the reference curves' axis (labels and title); the overview's metrics card keeps
+     clear of it */
+  --chart-response-axis-width: 64px;
+  --chart-ref-chlorophyll-a: #16a34a;
+  --chart-ref-chlorophyll-b: #0f766e;
+  --chart-ref-mccree: #7c3aed;
+  --chart-ref-photopic: #d97706;
+  /* spectrum calculation page: the result curve (ui-v2-pages.md 3.4 direction A chart.result) and the dashed 1×
+     line of a ratio (V1.0.3 axhline colour, the muted axis grey) */
+  --chart-result: #1d4ed8;
+  --chart-result-fill: rgba(29, 78, 216, 0.14);
+  --chart-reference: #64748b;
+  /* DLI page: one hue per metric (V1.0.3 also gave each chart its own colour); fills at 12 % like V1.0.3;
+     hues from the direction A reference-curve palette (ui-v2-pages.md 3.4: chl-a, chl-b, McCree) */
+  --chart-dli-ppfd: #2563eb;
+  --chart-dli-ppfd-fill: rgba(37, 99, 235, 0.12);
+  --chart-dli-mccree: #7c3aed;
+  --chart-dli-mccree-fill: rgba(124, 58, 237, 0.12);
+  --chart-dli-chl-a: #16a34a;
+  --chart-dli-chl-a-fill: rgba(22, 163, 74, 0.12);
+  --chart-dli-chl-b: #0f766e;
+  --chart-dli-chl-b-fill: rgba(15, 118, 110, 0.12);
+  --chart-dli-line-width: 2;
+  /* calibration preview of the maintenance page (V1.0.3 CalibrationCanvas: curve #0ea5e9, nodes #f97316, limit band
+     #b8c6d6 at 60 %, limit lines #737b85) */
+  --chart-calibration: #0ea5e9;
+  --chart-calibration-node: #f97316;
+  --chart-calibration-band: rgba(184, 198, 214, 0.6);
+  --chart-calibration-limit: #737b85;
+
+  /* typography (UI-001: the bundled Noto Sans SC, served from /fonts/) */
+  --font-family: "Noto Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  /* telemetry/numeric stack (stitch/A-design.md): the bundled JetBrains Mono, CJK glyphs inside numeric runs from
+     the bundled Noto Sans SC; system monospace fonts only if the bundled files fail to load */
+  --font-family-mono: "JetBrains Mono", "Noto Sans SC", ui-monospace, Consolas, monospace;
+  --font-numeric: tabular-nums;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-size-kpi: 22px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --line-height: 1.45;
+
+  /* spacing and shape (ui-v2-pages.md 3.4 direction A; flat panels, zero-shadow like the V1.0.x QSS) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --radius-control: 4px;
+  --radius-card: 6px;
+  --control-height: 32px;
+  --table-row-height: 28px;
+  --nav-height: 42px;
+  --status-height: 28px;
+  --dli-chart-height: 220px;
+  --operation-chart-min-height: 200px;
+  --operation-row-min-height: 260px;
+  --border-width: 1px;
+  --focus-ring: 0 0 0 2px var(--color-primary-container), 0 0 0 3px var(--color-primary);
+  --elevation-1: none;
+}

@@ -1,0 +1,288 @@
+{
+ "file_limit": 600,
+ "function_limit": 60,
+ "slot_limit": 40,
+ "long_files": {
+  "par_app/coordinator.py": 690,
+  "par_app/device_maintenance_dialog.py": 679,
+  "par_app/ui.py": 4294,
+  "verify_configuration.py": 1337,
+  "verify_maintenance.py": 1152,
+  "verify_multidevice.py": 1390,
+  "verify_polling.py": 1024
+ },
+ "long_functions": {
+  "par_app/coordinator.py::PollingCoordinator._capture_once": 70,
+  "par_app/coordinator.py::PollingCoordinator._process_tasks": 109,
+  "par_app/device_maintenance_dialog.py::DeviceMaintenanceDialog.__init__": 91,
+  "par_app/device_maintenance_dialog.py::DeviceMaintenanceDialog._build_diagnostics": 97,
+  "par_app/device_maintenance_dialog.py::DeviceMaintenanceDialog.update_controls": 87,
+  "par_app/device_maintenance_dialog.py::DeviceMaintenanceDialog.display_diagnostics": 86,
+  "par_app/maintenance.py::CommunicationMaintenance.execute": 69,
+  "par_app/maintenance_dialog.py::MaintenanceDialog.__init__": 106,
+  "par_app/theme.py::apply_theme": 77,
+  "par_app/ui.py::SpectrumCanvas.plot": 68,
+  "par_app/ui.py::OperationGuideCanvas.show_details": 107,
+  "par_app/ui.py::MainWindow.__init__": 61,
+  "par_app/ui.py::MainWindow._build_overview": 130,
+  "par_app/ui.py::MainWindow._build_history": 264,
+  "par_app/ui.py::MainWindow._layout_history_details": 74,
+  "par_app/ui.py::MainWindow._build_operations": 116,
+  "par_app/ui.py::MainWindow._build_calibration": 138,
+  "par_app/ui.py::MainWindow._build_diagnostics": 93,
+  "par_app/ui.py::MainWindow._build_settings": 349,
+  "par_app/ui.py::MainWindow.refresh_overview": 63,
+  "par_app/ui.py::MainWindow.show_history_spectrum": 41,
+  "par_app/ui.py::MainWindow._redraw_operation_charts": 80,
+  "par_app/ui.py::MainWindow.export_operation_results": 42,
+  "par_app/ui.py::MainWindow.export_acquisitions": 70,
+  "tools/generate_software_manual.py::main": 128,
+  "tools/verify_maintenance_hardware.py::main": 333,
+  "verify_configuration.py::verify_settings_layout": 212,
+  "verify_configuration.py::verify_automatic_comm": 70,
+  "verify_configuration.py::verify_settings_logs": 61,
+  "verify_configuration.py::verify_first_pages": 616,
+  "verify_configuration.py::main": 204,
+  "verify_export.py::main": 99,
+  "verify_maintenance.py::MaintenanceTests.test_bus_label_restored_maintenance_and_resume": 108,
+  "verify_maintenance.py::MaintenanceTests.test_unified_window_device_isolation_and_locks": 673,
+  "verify_multidevice.py::verify_dli_page": 174,
+  "verify_multidevice.py::main": 331,
+  "verify_multidevice.py::verify_page_controls": 142,
+  "verify_multidevice.py::verify_operation_interactions": 221,
+  "verify_multidevice.py::verify_ratio_filter": 111,
+  "verify_multidevice.py::verify_operation_dialogs": 122
+ },
+ "ruff": {
+  "main.py": {
+   "ANN001": 1,
+   "ANN201": 1,
+   "E501": 1,
+   "I001": 1
+  },
+  "package_release.py": {
+   "E501": 1
+  },
+  "par_app/app_config.py": {
+   "ANN204": 1,
+   "E501": 1,
+   "I001": 1
+  },
+  "par_app/coordinator.py": {
+   "ANN001": 1,
+   "ANN204": 1,
+   "B023": 3,
+   "E501": 8,
+   "F401": 1,
+   "I001": 1
+  },
+  "par_app/database.py": {
+   "ANN001": 1,
+   "ANN202": 1,
+   "ANN204": 1,
+   "E501": 9,
+   "E702": 2,
+   "I001": 1,
+   "UP035": 1
+  },
+  "par_app/device_hub.py": {
+   "ANN001": 1,
+   "ANN201": 1,
+   "ANN204": 2,
+   "E501": 2,
+   "UP037": 1
+  },
+  "par_app/device_maintenance_dialog.py": {
+   "ANN001": 15,
+   "ANN201": 25,
+   "ANN202": 1,
+   "ANN204": 2,
+   "ANN205": 1,
+   "E501": 18,
+   "I001": 1
+  },
+  "par_app/maintenance.py": {
+   "ANN001": 5,
+   "ANN204": 1,
+   "E501": 5,
+   "I001": 1
+  },
+  "par_app/maintenance_dialog.py": {
+   "ANN001": 19,
+   "ANN002": 1,
+   "ANN201": 13,
+   "ANN202": 2,
+   "ANN204": 1,
+   "E501": 1,
+   "E702": 4,
+   "I001": 1,
+   "W292": 1
+  },
+  "par_app/mccree1972_weights.py": {
+   "E402": 2,
+   "E501": 1,
+   "UP035": 1
+  },
+  "par_app/models.py": {
+   "E501": 2,
+   "UP037": 5
+  },
+  "par_app/protocol.py": {
+   "ANN001": 4,
+   "ANN201": 2,
+   "ANN202": 4,
+   "ANN204": 2,
+   "ANN205": 1,
+   "E501": 1,
+   "I001": 1,
+   "UP035": 1
+  },
+  "par_app/release_self_test.py": {
+   "ANN001": 2,
+   "ANN201": 1,
+   "B007": 1,
+   "E501": 1,
+   "I001": 1,
+   "W292": 1
+  },
+  "par_app/runtime_paths.py": {
+   "I001": 1,
+   "W292": 1
+  },
+  "par_app/theme.py": {
+   "E501": 12,
+   "I001": 1
+  },
+  "par_app/ui.py": {
+   "ANN001": 43,
+   "ANN002": 1,
+   "ANN201": 14,
+   "ANN202": 9,
+   "ANN204": 7,
+   "ANN205": 1,
+   "B007": 2,
+   "E501": 110,
+   "E701": 4,
+   "E702": 214,
+   "F401": 5,
+   "I001": 1
+  },
+  "tools/generate_software_manual.py": {
+   "ANN001": 3,
+   "ANN202": 1,
+   "B007": 1,
+   "E402": 7,
+   "E501": 1,
+   "I001": 1,
+   "W292": 1
+  },
+  "tools/release_metadata.py": {
+   "ANN201": 1,
+   "B007": 1,
+   "E501": 2,
+   "UP017": 1,
+   "W292": 1
+  },
+  "tools/rtu_full_spectrum_sweep.py": {
+   "B905": 1,
+   "E501": 6,
+   "E702": 1
+  },
+  "tools/rtu_timing_probe.py": {
+   "B905": 1,
+   "E501": 7
+  },
+  "tools/verify_maintenance_hardware.py": {
+   "ANN001": 27,
+   "ANN002": 1,
+   "ANN003": 2,
+   "ANN201": 4,
+   "ANN202": 7,
+   "B023": 5,
+   "E501": 29,
+   "I001": 1,
+   "W292": 1
+  },
+  "verify_configuration.py": {
+   "ANN001": 14,
+   "ANN201": 2,
+   "ANN202": 5,
+   "B007": 1,
+   "B905": 6,
+   "E501": 30,
+   "F841": 1,
+   "I001": 1,
+   "W292": 1
+  },
+  "verify_export.py": {
+   "F841": 1,
+   "I001": 1
+  },
+  "verify_maintenance.py": {
+   "ANN001": 7,
+   "ANN002": 1,
+   "ANN201": 26,
+   "ANN202": 5,
+   "ANN204": 1,
+   "B905": 5,
+   "E501": 20,
+   "F401": 1,
+   "F841": 1,
+   "I001": 4
+  },
+  "verify_multidevice.py": {
+   "ANN001": 26,
+   "ANN002": 1,
+   "ANN201": 8,
+   "ANN202": 3,
+   "ANN206": 2,
+   "B007": 5,
+   "B905": 6,
+   "E501": 43,
+   "F841": 1,
+   "I001": 1
+  },
+  "verify_polling.py": {
+   "ANN001": 15,
+   "ANN002": 6,
+   "ANN003": 1,
+   "ANN201": 40,
+   "ANN202": 26,
+   "B007": 4,
+   "B023": 38,
+   "E501": 18,
+   "F401": 1,
+   "I001": 1,
+   "W292": 1
+  }
+ },
+ "unformatted": [
+  "main.py",
+  "package_release.py",
+  "par_app/app_config.py",
+  "par_app/coordinator.py",
+  "par_app/database.py",
+  "par_app/device_hub.py",
+  "par_app/device_maintenance_dialog.py",
+  "par_app/maintenance.py",
+  "par_app/maintenance_dialog.py",
+  "par_app/math_ops.py",
+  "par_app/mccree1972_weights.py",
+  "par_app/models.py",
+  "par_app/photopic_weights.py",
+  "par_app/protocol.py",
+  "par_app/release_self_test.py",
+  "par_app/runtime_paths.py",
+  "par_app/ui.py",
+  "tools/generate_software_manual.py",
+  "tools/release_metadata.py",
+  "tools/rtu_full_spectrum_sweep.py",
+  "tools/rtu_timing_probe.py",
+  "tools/verify_maintenance_hardware.py",
+  "verify_configuration.py",
+  "verify_export.py",
+  "verify_maintenance.py",
+  "verify_multidevice.py",
+  "verify_polling.py"
+ ]
+}

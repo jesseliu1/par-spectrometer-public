@@ -1,0 +1,54 @@
+# Local-only material (old repo clone, audit scratch, discussion drafts)
+old/
+
+# Local tooling and environments
+.venv/
+venv/
+.tools/
+.claude/
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Runtime state written by the app (never commit field data or machine paths)
+config/
+data/
+logs/
+exports/
+*.sqlite3
+*.sqlite3-*
+*.db
+*.jsonl
+
+# Build output (build_release.ps1 / PyInstaller; web/dist from `npm run build`, built when packaging)
+build/
+dist/
+node_modules/
+release/
+stage_backups/
+# WebView2 offline installer: downloaded by build_alpha.ps1 or placed by the packer, never committed (S-5)
+redist/
+*.exe
+*.msi
+# Playwright (web/e2e) output
+test-results/
+playwright-report/
+*.zip
+
+# Secrets
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test/coverage output
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/

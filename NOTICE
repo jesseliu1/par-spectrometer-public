@@ -1,0 +1,15 @@
+PAR 光谱仪专用软件 2.0（PAR Spectrometer Software 2.0）
+Copyright © 2026 jesse.sijia.liu
+
+本软件按 PolyForm Strict License 1.0.0 提供（见 LICENSE.md）：只允许该许可证所列的非商业用途，
+不允许修改、制作衍生作品或再分发。其他用途须事先取得版权人的书面许可。
+
+第三方组件与数据
+本仓库的源码均为版权人所有，以下除外：
+- resources/fonts/：Noto Sans SC；web/fonts/：JetBrains Mono。均为 SIL Open Font License 1.1，许可证文本随字体存放。
+- tests/golden/mccree1972_upstream.txt：McCree, K. J. (1972) Agricultural Meteorology 9:191–216 表 III、IV 的
+  平均值，取自 P. J. Aphalo 的 photobiologyWavebands 仓库（data-raw/McCree1972a），仅作测试参照，出处见
+  tests/golden/README.md。
+- tools/alpha_licences/：随 Windows 测试包分发的第三方许可证原文（GPL-3.0、LGPL-3.0、pyserial BSD-3-Clause）。
+运行和打包时安装的依赖（requirements.lock、web/package-lock.json）按各自的许可证使用，其中 PySide6 为
+LGPL-3.0，其余多为 MIT、BSD、Apache-2.0。测试包内的第三方声明由 tools/alpha_release.py 生成。
